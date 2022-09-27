@@ -171,8 +171,8 @@ const DrawerContent = (
           justify="flex-start"
           marginTop={sizes.sm}
           marginBottom={sizes.s}
-          onPress={() =>
-            handleWebLink('https://github.com/creativetimofficial')
+          onPress={() => navigation.navigate('Pro')
+          
           }>
           <Block
             flex={0}
@@ -192,7 +192,8 @@ const DrawerContent = (
             />
           </Block>
           <Text p color={labelColor}>
-            {t('menu.started')}
+            {/* {t('menu.started')} */}
+            Logout
           </Text>
         </Button>
 

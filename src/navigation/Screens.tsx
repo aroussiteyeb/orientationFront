@@ -12,6 +12,14 @@ export default () => {
 
   return (
     <Stack.Navigator screenOptions={screenOptions.stack}>
+      <Stack.Screen name="Pro" component={Pro}         options={{headerShown: false}}
+ />
+
+         <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="Home"
         component={Home}
@@ -30,7 +38,6 @@ export default () => {
         options={{title: t('navigation.articles')}}
       />
 
-      <Stack.Screen name="Pro" component={Pro} options={screenOptions.pro} />
 
       <Stack.Screen
         name="Profile"
@@ -38,11 +45,7 @@ export default () => {
         options={{headerShown: false}}
       />
 
-      <Stack.Screen
-        name="Register"
-        component={Register}
-        options={{headerShown: false}}
-      />
+   
     </Stack.Navigator>
   );
 };
