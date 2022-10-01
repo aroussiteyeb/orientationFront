@@ -1,24 +1,27 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Linking, Platform } from 'react-native';
+import { Linking, Platform, ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
+import axios from 'axios';
 
 import { useData, useTheme, useTranslation } from '../hooks/';
 import * as regex from '../constants/regex';
 import { Block, Button, Input, Image, Text, Checkbox } from '../components/';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const isAndroid = Platform.OS === 'android';
 
 interface IRegistration {
-  name: string;
+
   email: string;
   password: string;
-  agreed: boolean;
+
 }
 interface IRegistrationValidation {
-  name: boolean;
+
   email: boolean;
   password: boolean;
-  agreed: boolean;
+ 
 }
 
 const Login = () => {
@@ -26,16 +29,16 @@ const Login = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [isValid, setIsValid] = useState<IRegistrationValidation>({
-    name: false,
+  
     email: false,
     password: false,
-    agreed: false,
+    
   });
   const [registration, setRegistration] = useState<IRegistration>({
-    name: '',
+    
     email: '',
     password: '',
-    agreed: false,
+
   });
   const { assets, colors, gradients, sizes } = useTheme();
 
@@ -46,20 +49,78 @@ const Login = () => {
     [setRegistration],
   );
 
-  const handleSignUp = useCallback(() => {
+  const showToastWithGravityAndOffset = (message :string ) => {
+    ToastAndroid.showWithGravityAndOffset(
+     message,
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+    
+      25,
+      50
+    );
+  };
+
+  const handleSignUp = useCallback(async () => {
+ 
     if (!Object.values(isValid).includes(false)) {
-      /** send/save registratin data */
-      console.log('handleSignUp', registration);
+ 
+      const data={
+        "email":registration.email,
+        "password":registration.password  
+    }
+    
+   /*    axios.post(`http://192.168.40.2:5000/users/login`, data)
+      .then(res => {
+        console.log("hh",res.data)
+      if (res.data.error==true){
+        showToastWithGravityAndOffset(res.data.message)
+      }else{(res.data.success==true)
+        showToastWithGravityAndOffset(res.data.message)
+        navigation.navigate('Home')}
+
+      
+      }).catch(error=>console.log('test',error)); */
+
+      
+      try {
+        let res = await fetch('http://192.168.40.2:5000/users/login', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            "email":registration.email,
+        "password":registration.password  ,
+          }),
+        }).then((response)=>response.json()) //   <------ this line 
+        .then(async (response)=>{
+          if (response.error==true){
+            showToastWithGravityAndOffset(response.message)
+          }else{(response.success==true)
+            showToastWithGravityAndOffset(response.message)
+            const jsonValue = JSON.stringify({token: response.accessToken})
+            await AsyncStorage.setItem('@storage_Key', jsonValue)
+
+          
+
+            navigation.navigate('Home')}
+          return response ;
+        });;
+      
+       
+      } catch (e) {
+        console.error(e);
+      }
+      console.log('ff', data);
     }
   }, [isValid, registration]);
 
   useEffect(() => {
     setIsValid((state) => ({
       ...state,
-      name: regex.name.test(registration.name),
       email: regex.email.test(registration.email),
       password: regex.password.test(registration.password),
-      agreed: registration.agreed,
     }));
   }, [registration, setIsValid]);
 
@@ -231,7 +292,7 @@ const Login = () => {
                 marginVertical={sizes.s}
                 marginHorizontal={sizes.sm}
                 gradient={gradients.primary}
-                onPress={() => navigation.navigate('Home')}
+               
                 disabled={Object.values(isValid).includes(false)}>
                 <Text bold white transform="uppercase">
                   {t('common.signin')}

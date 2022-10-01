@@ -1,21 +1,22 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Linking, Platform} from 'react-native';
+import {Linking, Platform, ToastAndroid} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 
 import {useData, useTheme, useTranslation} from '../hooks/';
 import * as regex from '../constants/regex';
 import {Block, Button, Input, Image, Text, Checkbox} from '../components/';
+import axios from 'axios';
 
 const isAndroid = Platform.OS === 'android';
 
 interface IRegistration {
-  name: string;
+  confirmPassword: string;
   email: string;
   password: string;
   agreed: boolean;
 }
 interface IRegistrationValidation {
-  name: boolean;
+  confirmPassword: boolean;
   email: boolean;
   password: boolean;
   agreed: boolean;
@@ -25,17 +26,18 @@ const Register = () => {
   const {isDark} = useData();
   const {t} = useTranslation();
   const navigation = useNavigation();
+
   const [isValid, setIsValid] = useState<IRegistrationValidation>({
-    name: false,
+    confirmPassword: false,
     email: false,
     password: false,
     agreed: false,
   });
   const [registration, setRegistration] = useState<IRegistration>({
-    name: '',
+    confirmPassword: '',
     email: '',
     password: '',
-    agreed: false,
+   agreed: false,
   });
   const {assets, colors, gradients, sizes} = useTheme();
 
@@ -46,9 +48,41 @@ const Register = () => {
     [setRegistration],
   );
 
+  const showToastWithGravityAndOffset = (message :string ) => {
+    ToastAndroid.showWithGravityAndOffset(
+     message,
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+    
+      25,
+      50
+    );
+  };
+
   const handleSignUp = useCallback(() => {
+  
     if (!Object.values(isValid).includes(false)) {
-      /** send/save registratin data */
+
+      const data={
+        "email":registration.email,
+        "password":registration.password,
+        "confirmPassword":registration.confirmPassword,
+       
+    }
+
+      
+      axios.post(`http://192.168.40.2:5000/users/signup`, data)
+      .then(res => {
+        console.log("hh",res.data)
+      if (res.data.error==true){
+        showToastWithGravityAndOffset(res.data.message)
+      }else{(res.data.success==true)
+        showToastWithGravityAndOffset(res.data.message)
+        navigation.navigate('Pro')}
+
+      
+      }).catch(error=>console.log(error));
+      
       console.log('handleSignUp', registration);
     }
   }, [isValid, registration]);
@@ -56,7 +90,7 @@ const Register = () => {
   useEffect(() => {
     setIsValid((state) => ({
       ...state,
-      name: regex.name.test(registration.name),
+      confirmPassword: regex.confirmPassword.test(registration.confirmPassword),
       email: regex.email.test(registration.email),
       password: regex.password.test(registration.password),
       agreed: registration.agreed,
@@ -176,15 +210,7 @@ const Register = () => {
               </Block>
               {/* form inputs */}
               <Block paddingHorizontal={sizes.sm}>
-                <Input
-                  autoCapitalize="none"
-                  marginBottom={sizes.m}
-                  label={t('common.name')}
-                  placeholder={t('common.namePlaceholder')}
-                  success={Boolean(registration.name && isValid.name)}
-                  danger={Boolean(registration.name && !isValid.name)}
-                  onChangeText={(value) => handleChange({name: value})}
-                />
+               
                 <Input
                   autoCapitalize="none"
                   marginBottom={sizes.m}
@@ -204,6 +230,16 @@ const Register = () => {
                   onChangeText={(value) => handleChange({password: value})}
                   success={Boolean(registration.password && isValid.password)}
                   danger={Boolean(registration.password && !isValid.password)}
+                />
+                 <Input
+                  secureTextEntry
+                  autoCapitalize="none"
+                  marginBottom={sizes.m}
+                  label={"Confirm Password"}
+                  placeholder={"Enter a confirm password"}
+                  onChangeText={(value) => handleChange({confirmPassword: value})}
+                  success={Boolean(registration.confirmPassword && isValid.confirmPassword)}
+                  danger={Boolean(registration.confirmPassword && !isValid.confirmPassword)}
                 />
               </Block>
               {/* checkbox terms */}
