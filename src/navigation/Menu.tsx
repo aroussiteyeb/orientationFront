@@ -12,7 +12,7 @@ import {
 import Screens from './Screens';
 import {Block, Text, Switch, Button, Image} from '../components';
 import {useData, useTheme, useTranslation} from '../hooks';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Drawer = createDrawerNavigator();
 
 /* drawer menu screens navigation */
@@ -76,6 +76,14 @@ const DrawerContent = (
     (to) => {
       setActive(to);
       navigation.navigate(to);
+    },
+    [navigation, setActive],
+  );
+  const handleLogout = useCallback(async () => {
+   
+      navigation.navigate('Pro');
+      AsyncStorage.clear()
+     
     },
     [navigation, setActive],
   );
@@ -171,9 +179,7 @@ const DrawerContent = (
           justify="flex-start"
           marginTop={sizes.sm}
           marginBottom={sizes.s}
-          onPress={() => navigation.navigate('Pro')
-          
-          }>
+          onPress={ handleLogout }>
           <Block
             flex={0}
             radius={6}
