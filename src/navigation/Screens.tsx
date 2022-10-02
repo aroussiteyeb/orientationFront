@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Articles, Components, Home, Profile, Register, Pro} from '../screens';
+import {Articles, Components, Home, Profile, Register, Pro, Filter} from '../screens';
 import {useScreenOptions, useTranslation} from '../hooks';
 
 const Stack = createStackNavigator();
@@ -44,7 +44,11 @@ export default () => {
         component={Profile}
         options={{headerShown: false}}
       />
-
+     <Stack.Screen
+        name="Filter"
+        component={Filter}
+        options={{title: 'Filter'}}
+      />
    
     </Stack.Navigator>
   );

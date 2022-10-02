@@ -93,13 +93,15 @@ const DrawerContent = (
   // screen list for Drawer menu
   const screens = [
     {name: t('screens.home'), to: 'Home', icon: assets.home},
+    {name: 'Filter', to: 'Filter', icon: assets.more},
     {name: t('screens.components'), to: 'Components', icon: assets.components},
     {name: t('screens.articles'), to: 'Articles', icon: assets.document},
-    {name: t('screens.rental'), to: 'Pro', icon: assets.rental},
+    //{name: t('screens.rental'), to: 'Pro', icon: assets.rental},
     {name: t('screens.profile'), to: 'Profile', icon: assets.profile},
-    {name: t('screens.settings'), to: 'Pro', icon: assets.settings},
-    {name: t('screens.register'), to: 'Register', icon: assets.register},
-    {name: t('screens.extra'), to: 'Pro', icon: assets.extras},
+    //{name: t('screens.settings'), to: 'Pro', icon: assets.settings},
+    //{name: t('screens.register'), to: 'Register', icon: assets.register},
+   // {name: t('screens.extra'), to: 'Pro', icon: assets.extras},
+
   ];
 
   return (

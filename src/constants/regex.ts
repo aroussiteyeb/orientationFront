@@ -8,6 +8,7 @@ export const confirmPassword: RegExp = /[a-zA-Z\ ]{3,15}/;
  * email validation
  */
 export const email: RegExp = /^[^\s@]+@[^\s@]+\.([^\s@]{2,})+$/;
+export const score: RegExp = /^[0-9\b]+$/;
 
 /*
  * password validation, should contain:
