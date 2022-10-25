@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {
   StackHeaderTitleProps,
   CardStyleInterpolators,
@@ -10,6 +10,7 @@ import {StackHeaderOptions} from '@react-navigation/stack/lib/typescript/src/typ
 
 import {useData} from './useData';
 import {useTranslation} from './useTranslation';
+import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
 
 import Image from '../components/Image';
 import Text from '../components/Text';
@@ -102,6 +103,43 @@ export default () => {
         </Button>
       ),
     },
+    chats: {
+      ...menu,
+      headerTitle: () => (
+        <Text p white>
+         Chats
+        </Text>
+      ),
+      headerRight: () => (
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: 80,
+            marginRight: 20,
+          }}
+        >
+          <TouchableOpacity activeOpacity={0.5}>
+            <AntDesign name="camerao" size={24} color="#fff" />
+
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("AddChat")}
+            activeOpacity={0.5}
+          >
+            <SimpleLineIcons name="pencil" size={24} color="#fff" />
+          </TouchableOpacity>
+        </View>
+      ),
+      headerLeft: () => (
+        <Button
+          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
+          <Image source={icons.menu} radius={0} color={colors.white} />
+        </Button>
+      ),
+    },
+   
     pro: {
       ...menu,
       headerTransparent: true,

@@ -1,5 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Alert, Animated, Linking, StyleSheet} from 'react-native';
+import { auth } from "../../firebase";
+import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
 
 import {
   useIsDrawerOpen,
@@ -74,6 +76,14 @@ const DrawerContent = (
 
   const handleNavigation = useCallback(
     (to) => {
+      if(to == 'Chats')
+      {
+        
+          auth
+            .signInWithEmailAndPassword('aroussi@gmail.com', 'azerty')
+            .catch((error) => alert(error));
+        
+      }
       setActive(to);
       navigation.navigate(to);
     },
@@ -98,7 +108,7 @@ const DrawerContent = (
     {name: t('screens.articles'), to: 'Articles', icon: assets.document},
     //{name: t('screens.rental'), to: 'Pro', icon: assets.rental},
     {name: t('screens.profile'), to: 'Profile', icon: assets.profile},
-    //{name: t('screens.settings'), to: 'Pro', icon: assets.settings},
+    {name: 'chat', to: 'Chats', icon: assets.chat},
     //{name: t('screens.register'), to: 'Register', icon: assets.register},
    // {name: t('screens.extra'), to: 'Pro', icon: assets.extras},
    {name:'Score', to: 'Score', icon: assets.profile},
@@ -212,7 +222,7 @@ const DrawerContent = (
             checked={isDark}
             onPress={(checked) => {
               handleIsDark(checked);
-              Alert.alert(t('pro.title'), t('pro.alert'));
+              //Alert.alert(t('pro.title'), t('pro.alert'));
             }}
           />
         </Block>

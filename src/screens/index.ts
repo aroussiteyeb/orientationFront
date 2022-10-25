@@ -18,6 +18,11 @@ export {default as Settings} from './Pro';
 export {default as Shopping} from './Pro';
 export {default as Pro} from './Pro';
 export {default as Filter} from './Filter';
+export {default as Resultat} from './Resultat';
+export {default as Chats} from './Chats';
+export {default as AddChatScreen} from './AddChatScreen';
+export {default as ChatScreen} from './ChatScreen';
+
 
 
 export {default as Score} from './Score';
