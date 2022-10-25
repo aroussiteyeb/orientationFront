@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Articles, Components, Home, Profile, Register, Pro, Filter,Resultat,ChatScreen,Chats,AddChatScreen,Score} from '../screens';
+import {Articles, Components, Home, Profile, Register, Pro, Filter,Resultat,ChatScreen,Chats,AddChatScreen} from '../screens';
 import {useScreenOptions, useTranslation} from '../hooks';
 
 const Stack = createStackNavigator();
