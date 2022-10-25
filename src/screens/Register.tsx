@@ -71,7 +71,7 @@ const Register = () => {
     }
 
       
-      axios.post(`http://172.20.10.14:5000/users/signup`, data)
+      axios.post(`http://192.168.1.37:5000/users/signup`, data)
       .then(res => {
         console.log("hh",res.data)
       if (res.data.error==true){
