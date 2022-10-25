@@ -67,23 +67,9 @@ const Login = () => {
       const data={
         "email":registration.email,
         "password":registration.password  
-    }
-    
-   /*    axios.post(`http://192.168.40.2:5000/users/login`, data)
-      .then(res => {
-        console.log("hh",res.data)
-      if (res.data.error==true){
-        showToastWithGravityAndOffset(res.data.message)
-      }else{(res.data.success==true)
-        showToastWithGravityAndOffset(res.data.message)
-        navigation.navigate('Home')}
-
-      
-      }).catch(error=>console.log('test',error)); */
-
-      
+    }  
       try {
-        let res = await fetch('http://192.168.40.2:5000/users/login', {
+        let res = await fetch('http://192.168.1.4:5000/users/login', {
           method: 'POST',
           headers: {
             Accept: 'application/json',

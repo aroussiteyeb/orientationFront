@@ -1,8 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Articles, Components, Home, Profile, Register, Pro} from '../screens';
+import {Articles, Components, Home, Profile, Register, Pro,Score} from '../screens';
 import {useScreenOptions, useTranslation} from '../hooks';
+
 
 const Stack = createStackNavigator();
 
@@ -12,8 +13,13 @@ export default () => {
 
   return (
     <Stack.Navigator screenOptions={screenOptions.stack}>
-      <Stack.Screen name="Pro" component={Pro}         options={{headerShown: false}}
+      
+      <Stack.Screen 
+      name="Pro" 
+      component={Pro}   
+     options={{headerShown: false}}
  />
+ 
 
          <Stack.Screen
         name="Register"
@@ -25,6 +31,10 @@ export default () => {
         component={Home}
         options={{title: t('navigation.home')}}
       />
+    
+      
+     
+        
 
       <Stack.Screen
         name="Components"
@@ -44,7 +54,11 @@ export default () => {
         component={Profile}
         options={{headerShown: false}}
       />
-
+      <Stack.Screen
+        name="Score"
+        component={Score}
+        options={{title: t('navigation.score')}}
+      />
    
     </Stack.Navigator>
   );
