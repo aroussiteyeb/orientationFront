@@ -19,3 +19,6 @@ export {default as Shopping} from './Pro';
 export {default as Pro} from './Pro';
 export {default as Filter} from './Filter';
 
+
+export {default as Score} from './Score';
+
