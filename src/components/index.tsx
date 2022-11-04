@@ -8,8 +8,10 @@ import Checkbox from './Checkbox';
 import Image from './Image';
 import Article from './Article';
 import Product from './Product';
+import Etablissement from './Etablissement';
 
 export {
+  Etablissement,
   Block,
   Button,
   Input,
