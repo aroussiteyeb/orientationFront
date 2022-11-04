@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {useData, useTheme, useTranslation} from '../hooks/';
 import {Block, Button, Image, Input, Product, Text} from '../components/';
@@ -7,6 +7,10 @@ const Home = () => {
   const {t} = useTranslation();
   const [tab, setTab] = useState<number>(0);
   const {following, trending} = useData();
+ // const {etatique, setEtatique} = useState();
+ // const {p,SetEtablissement}= useState();
+
+  const [etablisement, SetEtablissement] = useState();
   const [products, setProducts] = useState(following);
   const {assets, colors, fonts, gradients, sizes} = useTheme();
 
@@ -17,7 +21,36 @@ const Home = () => {
     },
     [following, trending, setTab, setProducts],
   );
+  const handleetablisement = async () => {
 
+    try {
+   
+
+      const response = await fetch('http://192.168.10.181:5000/etablisement/etablisementGetAll').then((response)=>response.json()
+      ) //   <------ this line 
+      
+      .then(async (response)=>{
+        
+   
+     let res=response
+      
+     
+     SetEtablissement(res)
+         
+    console.log("ichrak",res)
+      })
+   
+    } catch (error) {
+      console.error(error);
+    }
+
+
+  }
+  useEffect(() => {
+
+    handleetablisement();
+  
+  },[]);
   return (
     <Block>
       {/* search input */}
@@ -47,7 +80,7 @@ const Home = () => {
               <Image source={assets.extras} color={colors.white} radius={0} />
             </Block>
             <Text p font={fonts?.[tab === 0 ? 'medium' : 'normal']}>
-              {t('home.following')}
+              Etatique
             </Text>
           </Block>
         </Button>
@@ -76,7 +109,7 @@ const Home = () => {
               />
             </Block>
             <Text p font={fonts?.[tab === 1 ? 'medium' : 'normal']}>
-              {t('home.trending')}
+             Prive
             </Text>
           </Block>
         </Button>
@@ -87,10 +120,11 @@ const Home = () => {
         scroll
         paddingHorizontal={sizes.padding}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: sizes.l}}>
-        <Block row wrap="wrap" justify="space-between" marginTop={sizes.sm}>
-          {products?.map((product) => (
-            <Product {...product} key={`card-${product?.id}`} />
+       contentContainerStyle={{paddingBottom: sizes.l}}
+        >
+        <Block   marginTop={sizes.sm}>
+          {etablisement?.map((item) => (
+            <Product {...item} key={`card-${item?.id}`} />
           ))}
         </Block>
       </Block>

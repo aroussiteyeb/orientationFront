@@ -77,6 +77,7 @@ const Article = ({
           )}
 
           {/* location & rating */}
+          
           {(Boolean(location) || Boolean(rating)) && (
             <Block row align="center">
               <Image source={icons.location} marginRight={sizes.s} />
