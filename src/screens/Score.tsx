@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, Linking, Platform, ToastAndroid } from 'react-native';
+import { FlatList, Linking, Platform, ToastAndroid, ScrollView,} from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
 
@@ -21,23 +21,81 @@ const Score = () => {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const { assets, colors, sizes, gradients } = useTheme();
-  const [quantity, setQuantity] = useState('specialite');
+  const [quantity, setQuantity] = useState('Math');
   const [showModal, setModal] = useState(false);
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [show, setshow] = useState(false);
   const [section, setSection] = useState()
+  const [formData, setFormData] = useState()
+  const [formCoiff, setformCoiff] = useState()
+  const [input, setInput] = useState()
+  const [inputs, setInputs] = useState({});
+  const [data, setData] = useState({section:"",data:[]});
+  const [Score, setScore] = useState()
+  
+
 
 
   const handleOpen = () => {
-    setshow(true)
+   
   }
 
   const handleClose = () => {
     setshow(false)
   }
+  const handleScore = async () => {
+    try {
+      console.log("jj",data)
+
+      let res = await fetch('http://192.168.10.181:5000/CalculeScore/Score', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+         data
+        }),
+       
+      }).then((response)=>response.json()
+      ) //   <------ this line 
+      
+      .then(async (response)=>{
+        
+   
+     let score=response.data
+      
+      console.log("ichrak",score)
+     setScore(score)
+         
+     
+      });; 
+      
+     
+            
+    } catch (e) {
+      console.error(e);
+    }
+
+
+    const res =  Object.entries(inputs).map( (data, index) => ({matieres:data[0], note:data[1] ,mg:"15",coif:formCoiff[index]}) );
+    data.section=quantity
+  data.data=res
+
+    console.log("json",data)
+     setshow(true)
+    // navigation.navigate('Filter')
+ 
+   }
+   
   const handlenavigate = () => {
-    setshow(false)
-    navigation.navigate('Register')
+   
+    
+   
+
+  
+   setshow(false)
+   navigation.navigate('Filter')
 
   }
   const styles = StyleSheet.create({
@@ -54,12 +112,13 @@ const Score = () => {
   const handleSection = async () => {
 
     try {
-      const response = await fetch('http://192.168.10.196:5000/section/sectionGetAll');
+      const response = await fetch('http://192.168.10.181:5000/section/sectionGetAll');
       const data =[]
       const json = await response.json();
       json.forEach(element  => {
         data.push(element.nameSection)
       });
+     
       setSection(data);
       console.log("mm", data)
     } catch (error) {
@@ -68,9 +127,15 @@ const Score = () => {
 
 
   }
+
+
+
+
    const getMatiere= useCallback(async (nameSection) => {  
+    const data=[]
+    const dataCoiff=[]
       try {
-        let res = await fetch('http://192.168.10.196:5000/section/sectionGetByName', {
+        let res = await fetch('http://192.168.10.181:5000/section/sectionGetByName', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -82,7 +147,20 @@ const Score = () => {
           }),
         }).then((response)=>response.json()) //   <------ this line 
         .then(async (response)=>{
-       console.log("tt",response.data.matieres)
+          console.log(response)
+          response.data.matieres.forEach(element  => {
+            data.push(element.nameMatiere)
+           
+          });
+          response.data.matieres.forEach(element  => {
+            dataCoiff.push(element.coff)
+           
+          });
+          setformCoiff(dataCoiff)
+          console.log("coif",dataCoiff)
+  
+          setFormData(data)
+       console.log("tt",data)
           return response ;
         });;      
       } catch (e) {
@@ -92,41 +170,85 @@ const Score = () => {
     },[]); 
 
 
+ 
+   
+
   useEffect(() => {
     handleSection();
+    getMatiere('Math');
   
   },[]);
 
 
+  const ListFooter = () => {
+    //View to set in Footer
+    return (
+      <Block row justify="space-between" marginBottom={70}  >
+          <Block row
+            align="center"
+            justify="space-between"
+            paddingHorizontal={sizes.sm}>
+          
+            <Block>
+            
+              <Button gradient={gradients.primary} marginHorizontal={sizes.sm}  onPress={handleScore}  >
+              <Text white bold transform="uppercase" marginHorizontal={sizes.s} marginTop={1} >
+                  calculer
+                </Text>
+                </Button>
+                <SCLAlert
+                  theme='success'
+                  show={show}
+                  title="Votre Score est :"
+                  subtitle={Score}
+                >
+                  <Button gradient={gradients.primary} marginHorizontal={40}
+                  >
+                    <Text white bold transform="uppercase" marginHorizontal={sizes.s} marginTop={1} onPress={handlenavigate}>
+                      Go to filter
+                    </Text>
+                  </Button>
+                  <SCLAlertButton theme="primary" onPress={handleClose}>Done</SCLAlertButton>
 
+                </SCLAlert>
+             
+            </Block>
+         
+            <Block  >
+              <Button gradient={gradients.primary}>
+                <Text white bold transform="uppercase" marginHorizontal={sizes.sm}>
+                  reset
+                </Text>
+              </Button>
+       
+            </Block>
+         
+          </Block>
+        </Block>
+    );
+  };
 
 
 
   return (
-    <Block
-
-      color={colors.card}
-
+    <Block color={colors.card}
       paddingTop={sizes.m}
       paddingHorizontal={sizes.padding}>
       <Text p semibold marginBottom={sizes.s}>
         Choose your bac
       </Text>
+
       <Block color={colors.card} row flex={0} paddingVertical={sizes.padding}>
-
         <Button
-
           marginVertical={-10}
           flex={1}
           row
           gradient={gradients.primary}
-
           onPress={() => setModal(true)}>
+
           <Block
             row justify="space-between" marginBottom={sizes.s}
-
             align="center"
-
             paddingHorizontal={sizes.sm}>
             <Text white bold transform="uppercase" marginRight={sizes.sm}>
               {quantity}
@@ -139,6 +261,9 @@ const Score = () => {
           </Block>
         </Button>
       </Block>
+
+
+
       <Modal visible={showModal} onRequestClose={() => setModal(false)}>
         <FlatList
           keyExtractor={(index) => `${index}`}
@@ -163,56 +288,27 @@ const Score = () => {
       </Modal>
       <Block
         paddingTop={15}>
-
-        <Input placeholder="Programation" marginBottom={45} label='Programation' />
-
-        <Input placeholder="Base de donne" marginBottom={45} label=' Base de donne' />
-
-        <Input placeholder="Tic" marginBottom={45} label=' Tic' />
-
-        <Input placeholder="Math" marginBottom={45} label=' Math' />
-        <Block row justify="space-between" marginBottom={70} >
-          <Block row
-            align="center"
-            justify="space-between"
-            paddingHorizontal={sizes.sm}>
-            <Block >
-
-              <Button gradient={gradients.primary} marginHorizontal={sizes.sm} onPress={handleOpen}>
-                <SCLAlert
-                  theme='success'
-                  show={show}
-                  title="Lorem"
-                  subtitle="Lorem ipsum dolor"
-                >
-                  <Button gradient={gradients.primary} marginHorizontal={40} onPress={handlenavigate}
-                  >
-                    <Text white bold transform="uppercase" marginHorizontal={sizes.s} marginTop={1}>
-                      Go to filter
-                    </Text>
-                  </Button>
-                  <SCLAlertButton theme="primary" onPress={handleClose}>Done</SCLAlertButton>
-
-                </SCLAlert>
-                <Text white bold transform="uppercase" marginHorizontal={sizes.s} marginTop={1}>
-                  calculer
-                </Text>
-
-
-              </Button>
-
-            </Block>
-
-            <Block  >
-              <Button gradient={gradients.primary}>
-                <Text white bold transform="uppercase" marginHorizontal={sizes.sm}>
-                  reset
-                </Text>
-              </Button>
-            </Block>
-          </Block>
+      <FlatList
+      ListFooterComponent={ListFooter}
+      removeClippedSubviews={false}
+          keyExtractor={(index) => `${index}`}
+          data={formData}
+          renderItem={({ item,index }) => (
+            
+           <Input placeholder={item} marginBottom={45} label={item}
+           onChangeText={(e) =>
+             setInputs((prev) => {
+               return { ...prev, [item]: e };
+             })
+           }
+         />
+          )}
+        />
+        
+        
+        
         </Block>
-      </Block>
+        
 
       { /*buttons*/}
 
@@ -224,3 +320,5 @@ const Score = () => {
 
 };
 export default Score;
+
+
