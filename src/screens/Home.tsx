@@ -26,7 +26,7 @@ const Home = () => {
     try {
    
 
-      const response = await fetch('http://192.168.10.181:5000/etablisement/etablisementGetAll').then((response)=>response.json()
+      const response = await fetch('http://192.168.10.201:5000/etablisement/etablisementGetAll').then((response)=>response.json()
       ) //   <------ this line 
       
       .then(async (response)=>{

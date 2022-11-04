@@ -197,7 +197,7 @@ const Rsultat = forwardRef((_, ref) => {
         contentContainerStyle={{ paddingBottom: sizes.l }}
         renderItem={({ item, index }) => <TouchableWithoutFeedback >
 
-          <Block card white padding={0} marginTop={sizes.sm}>
+          <Block card white padding={0} marginTop={sizes.sm} >
             {console.log(index, 'test', item.galorie[0].path)}
             <Image
               background
@@ -205,14 +205,14 @@ const Rsultat = forwardRef((_, ref) => {
               radius={sizes.cardRadius}
               source={{ uri: item.galorie[0].path }}>
               <Block color={colors.overlay} padding={sizes.padding}>
-                <Block paddingLeft={'80%'}>
+                <Block paddingLeft={'70%'}>
                   <Button onPress={(e) => onOpen(item?.etablisementId)}>
                     <Text p primary semibold>
                       Show more
                     </Text>
                   </Button>
                 </Block>
-                <Text h4 white marginBottom={sizes.sm}>
+                <Text h5 white marginBottom={sizes.sm}>
                   {item.nameFiliere}
                 </Text>
                 <Text p white>
@@ -228,14 +228,16 @@ const Rsultat = forwardRef((_, ref) => {
                     style={{ backgroundColor: colors.white }}
                   />
                   <Block justify="center" marginLeft={sizes.s}>
-                    <Text p white semibold>
+                    <Text  p white semibold>
                       {item.nameEtablisement}
                     </Text>
                     <Text p white>
 
                     </Text>
                   </Block>
-                  <Block row align="center">
+                  
+                </Block>
+                <Block row align="center" marginRight={10}>
                     <Image source={icons.location} marginRight={sizes.s} />
                     <Text p size={12} white>
                       {item.region}, {item.ville}
@@ -248,7 +250,6 @@ const Rsultat = forwardRef((_, ref) => {
                       {item.rating}/5
                     </Text>
                   </Block>
-                </Block>
               </Block>
             </Image>
           </Block>

@@ -1495,13 +1495,15 @@
     "find-up" "^5.0.0"
     "js-yaml" "^4.1.0"
 
+"@faker-js/faker@^7.6.0":
+  "integrity" "sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw=="
+  "resolved" "https://registry.npmjs.org/@faker-js/faker/-/faker-7.6.0.tgz"
+  "version" "7.6.0"
+
 "@firebase/analytics-compat@0.1.16":
   "integrity" "sha512-mDAhE33WiyCrqSQZvzyZtQCCdf4ipn5tsEpTbIUruk7MbThQ1EbNAbPBiEk9NDLD3sUyLABZGFctvym/hc8H+w=="
   "resolved" "https://registry.npmjs.org/@firebase/analytics-compat/-/analytics-compat-0.1.16.tgz"
   "version" "0.1.16"
-
-
-
   dependencies:
     "@firebase/analytics" "0.8.3"
     "@firebase/analytics-types" "0.7.0"
@@ -5457,7 +5459,6 @@
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
 
-
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
   "resolved" "https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz"
@@ -5842,13 +5843,8 @@
   "resolved" "https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-5.0.1.tgz"
   "version" "5.0.1"
   dependencies:
-    "agent-base" "6"fsevents@
+    "agent-base" "6"
     "debug" "4"
-
-
-
-
-
 
 "human-signals@^2.1.0":
   "integrity" "sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw=="
