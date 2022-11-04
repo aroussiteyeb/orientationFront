@@ -45,6 +45,17 @@ export interface IArticle {
   onPress?: (event?: any) => void;
 }
 
+export interface IEtablissment {
+  etablissment?: any;
+  filieres?: any;
+  parcours?: any;
+  
+  //user?: IUser;
+  //offers?: IProduct[];
+  //options?: IArticleOptions[];
+  //timestamp?: number;
+}
+
 export interface IProduct {
   id?: number;
   title?: string;
@@ -79,6 +90,8 @@ export interface IUseData {
   recommendations: IArticle[];
   setRecommendations: (data?: IArticle[]) => void;
   articles: IArticle[];
+  etablissment: IEtablissment[];
+
   setArticles: (data?: IArticle[]) => void;
   article: IArticle;
   handleArticle: (data?: IArticle) => void;

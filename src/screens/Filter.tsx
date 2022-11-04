@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { FlatList, View, StyleSheet, Pressable, Alert } from 'react-native';
+import { FlatList, View, StyleSheet, ToastAndroid, Alert } from 'react-native';
 
 import { useData, useTheme } from '../hooks/';
 import { IArticle, ICategory } from '../constants/types';
-import { Block, Button, Input, Text, Switch, Image,Modal } from '../components';
+import { Block, Button, Input, Text, Switch, Image, Modal } from '../components';
 import * as regex from '../constants/regex';
 import { useNavigation } from '@react-navigation/core';
 import Dialog from "react-native-dialog";
@@ -37,10 +37,21 @@ const Filter = () => {
   const [domaine, setDomaine] = useState('Select domain');
   const [showModalPlace, setModalPlace] = useState(false);
   const [modalSimple, setModalSimle] = useState(false);
+  const [dialogInput, setDialogInput] = useState('');
+  const [dialogSwitch, setDialogSwitch] = useState('');
 
   const [place, setPlace] = useState('Select place');
   const navigation = useNavigation();
-
+  const showToastWithGravityAndOffset = (message :string ) => {
+    ToastAndroid.showWithGravityAndOffset(
+     message,
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+    
+      25,
+      50
+    );
+  };
   //category 
   const CATEGORIES: ICategory[] = [
     { id: 1, name: 'Advanced filtering' },
@@ -73,13 +84,44 @@ const Filter = () => {
   }
 
 
-  const hideDialog =  () => {
+  const hideDialog = () => {
     setModalSimle(false)
   }
 
- const handleNavigateSimple = () => {
-   setModalSimle(false)
-    navigation.navigate('Resultat')
+  const handleNavigateSimple = async () => {
+    setModalSimle(false)
+    try {
+      let res = await fetch('http:/192.168.10.87:5000/simpleFiltring/filter', {
+        method: 'post',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "score":dialogInput,
+          "type":dialogSwitch ,
+        }),
+        
+      }).then((response)=>response.json()) //   <------ this line 
+      .then(async (response)=>{
+        if (response.error==true){
+          showToastWithGravityAndOffset(response.message)
+        }else{(response.success==true)
+          showToastWithGravityAndOffset(response.message)
+          //const jsonValue = JSON.stringify({token: response.accessToken})
+         //console.log(response.data)
+    let message = response.data
+          navigation.navigate('Resultat',{message})
+        }
+        //return response ;
+      });;
+    
+     
+    } catch (e) {
+      console.error(e);
+    }
+   // alert(dialogSwitch)
+    //navigation.navigate('Resultat')
 
   };
 
@@ -290,16 +332,25 @@ const Filter = () => {
                     </Button>
                   </Block>
                   {/* filtriing simple modal  */}
-                  <View  style={styles.container}>
+                  <View style={styles.container}>
                     <Dialog.Container visible={modalSimple}>
                       <Dialog.Title>Simple Filtring</Dialog.Title>
                       <Dialog.Description>
                         This method of filter will make you have a multiple result maybe not recommended for you .
                       </Dialog.Description>
-                        <Dialog.Title>university</Dialog.Title>
-                      <Dialog.Input label='Enter your score'></Dialog.Input>
+                      <Dialog.Title>university</Dialog.Title>
+                      <Dialog.Input onChangeText={(e) => setDialogInput(e)} label='Enter your score'></Dialog.Input>
+                      <Dialog.Switch onChange={(e) => setDialogSwitch('math')} label='Mathématiques'></Dialog.Switch>
+                      <Dialog.Switch onChange={(e) => setDialogSwitch('se')} label='Sciences expérimentales '></Dialog.Switch>
+                      <Dialog.Switch onChange={(e) => setDialogSwitch('eg') }label='Économie et gestion'></Dialog.Switch>
+                      <Dialog.Switch onChange={(e) => setDialogSwitch('st')}label='Sciences techniques'></Dialog.Switch>
+                      <Dialog.Switch onChange={(e) => setDialogSwitch('lettre')} label='Lettres'></Dialog.Switch>
+                      <Dialog.Switch onChange={(e) => setDialogSwitch('sport')}label='Sport'></Dialog.Switch>
+                      <Dialog.Switch onChange={(e) => setDialogSwitch('si')} label='Sciences de informatique'></Dialog.Switch>
+
+
                       <Dialog.Button label="Cancel" onPress={hideDialog} />
-                      <Dialog.Button label="Filter" onPress={handleNavigateSimple}/>
+                      <Dialog.Button label="Filter" onPress={handleNavigateSimple} />
                     </Dialog.Container>
                   </View>
                 </Block>
