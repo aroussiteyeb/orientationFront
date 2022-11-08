@@ -58,6 +58,7 @@ export default () => {
      <Stack.Screen
         name="Filter"
         component={Filter}
+      initialParams={{Score :""}}
         options={{title: 'Filter'}}
       />
         <Stack.Screen name="Chats" component={Chats}   options={screenOptions.chats}  />

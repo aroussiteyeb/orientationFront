@@ -49,9 +49,9 @@
     }
   },
   "app": {
-    "name": "Soft UI",
+    "name": "ORIENTINI",
     "fullname": "Soft UI Kit",
-    "native": "React Native",
+    "native": "",
     "link": "creative-tim.com"
   },
   "darkMode": "Dark Mode",
@@ -66,7 +66,7 @@
     "extra": "Extra - Automotive"
   },
   "navigation": {
-    "home": "Soft UI",
+    "home": "Home",
     "components": "Components",
     "articles": "Soft UI",
     "rentals": "Soft UI",

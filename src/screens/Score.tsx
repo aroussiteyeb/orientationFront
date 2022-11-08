@@ -47,7 +47,7 @@ const Score = () => {
     try {
       console.log("jj",data)
 
-      let res = await fetch('http://192.168.1.3:5000/CalculeScore/Score', {
+      let res = await fetch('http://192.168.10.86:5000/CalculeScore/Score', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -95,7 +95,7 @@ const Score = () => {
 
   
    setshow(false)
-   navigation.navigate('Filter')
+   navigation.navigate('Filter',{Score})
 
   }
   const styles = StyleSheet.create({
@@ -112,7 +112,7 @@ const Score = () => {
   const handleSection = async () => {
 
     try {
-      const response = await fetch('http://192.168.1.3:5000/section/sectionGetAll');
+      const response = await fetch('http://192.168.10.86:5000/section/sectionGetAll');
       const data =[]
       const json = await response.json();
       json.forEach(element  => {
@@ -135,7 +135,7 @@ const Score = () => {
     const data=[]
     const dataCoiff=[]
       try {
-        let res = await fetch('http://192.168.1.3:5000/section/sectionGetByName', {
+        let res = await fetch('http://192.168.10.86:5000/section/sectionGetByName', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -309,7 +309,7 @@ const Score = () => {
         
         </Block>
         
-
+        {ListFooter}
       { /*buttons*/}
 
 

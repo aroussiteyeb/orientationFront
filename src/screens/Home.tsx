@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import {useData, useTheme, useTranslation} from '../hooks/';
 import {Block, Button, Image, Input, Product, Text} from '../components/';
+import { ListItem } from 'react-native-elements';
 
 const Home = () => {
   const {t} = useTranslation();
@@ -10,35 +11,58 @@ const Home = () => {
  // const {etatique, setEtatique} = useState();
  // const {p,SetEtablissement}= useState();
 
-  const [etablisement, SetEtablissement] = useState();
-  const [products, setProducts] = useState(following);
-  const {assets, colors, fonts, gradients, sizes} = useTheme();
+  //const [etablisement, SetEtablissement] = useState();
+  const [etatique, setEtatique] = useState();
+  const [search, setSearch] = useState();
+  const [prive, setPrive] = useState();
+  const [products, setProducts] = useState();
+  const [productsCopie, setProductsCopie] = useState();
 
+  const {assets, colors, fonts, gradients, sizes} = useTheme();
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
   const handleProducts = useCallback(
     (tab: number) => {
       setTab(tab);
-      setProducts(tab === 0 ? following : trending);
+      setProducts(tab === 0 ? etatique : prive);
+      setProductsCopie(tab === 0 ? etatique : prive);
+
     },
-    [following, trending, setTab, setProducts],
+    [etatique, prive, setTab, setProducts],
   );
   const handleetablisement = async () => {
-
+var data=""
     try {
    
 
-      const response = await fetch('http://192.168.10.201:5000/etablisement/etablisementGetAll').then((response)=>response.json()
+      const response = await fetch('http://192.168.10.86:5000/etablisement/etablisementGetAll').then((response)=>response.json()
       ) //   <------ this line 
       
       .then(async (response)=>{
-        
-   
-     let res=response
-      
-     
-     SetEtablissement(res)
+        const dataprive=[]
+        const dataEtatique=[]
+        response.forEach(element  => {
          
-    console.log("ichrak",res)
-      })
+          data=element.type
+          console.log("zzzz",data)
+          if(data=='prive'){
+            console.log("dd",data)
+           // setPrive(element)
+           dataprive.push(element)
+           setPrive(dataprive)
+            console.log("ttt",element)}
+            else {
+              dataEtatique.push(element)
+              setEtatique(dataEtatique)
+             
+            }
+        });
+     console.log("dataprive",dataprive)
+     console.log("ggv",dataEtatique)
+     setProducts(dataEtatique);
+
+    // SetEtablissement(res)
+      console.log("tab",tab)
+      });
    
     } catch (error) {
       console.error(error);
@@ -46,6 +70,22 @@ const Home = () => {
 
 
   }
+  const handleSearch =(value)=>{   
+  let data = products
+  console.log("hh",productsCopie)
+
+ let searchData = products.filter(item=>item.nameEtablisement.includes(value.value));
+ setProducts(searchData)
+ console.log(searchData)
+ if(value.value.length == 0)
+ {
+  setProducts(productsCopie)
+
+ }
+
+  }
+
+
   useEffect(() => {
 
     handleetablisement();
@@ -55,7 +95,8 @@ const Home = () => {
     <Block>
       {/* search input */}
       <Block color={colors.card} flex={0} padding={sizes.padding}>
-        <Input search placeholder={t('common.search')} />
+        <Input search placeholder={t('common.search')} 
+                onChangeText={(value) => handleSearch({value} )}/>
       </Block>
 
       {/* toggle products list */}
@@ -123,8 +164,8 @@ const Home = () => {
        contentContainerStyle={{paddingBottom: sizes.l}}
         >
         <Block   marginTop={sizes.sm}>
-          {etablisement?.map((item) => (
-            <Product {...item} key={`card-${item?.id}`} />
+          {products?.map((item) => (
+            <Product {...item} key={`card-${item?.etablisementId}`} />
           ))}
         </Block>
       </Block>

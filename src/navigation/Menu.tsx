@@ -104,14 +104,14 @@ const DrawerContent = (
   const screens = [
     {name: t('screens.home'), to: 'Home', icon: assets.home},
     {name: 'Filter', to: 'Filter', icon: assets.more},
-    {name: t('screens.components'), to: 'Components', icon: assets.components},
-    {name: t('screens.articles'), to: 'Articles', icon: assets.document},
+    //{name: t('screens.components'), to: 'Components', icon: assets.components},
+   // {name: t('screens.articles'), to: 'Articles', icon: assets.document},
     //{name: t('screens.rental'), to: 'Pro', icon: assets.rental},
-    {name: t('screens.profile'), to: 'Profile', icon: assets.profile},
+    //{name: t('screens.profile'), to: 'Profile', icon: assets.profile},
     {name: 'chat', to: 'Chats', icon: assets.chat},
     //{name: t('screens.register'), to: 'Register', icon: assets.register},
    // {name: t('screens.extra'), to: 'Pro', icon: assets.extras},
-   {name:'Score', to: 'Score', icon: assets.profile},
+   {name:'Score', to: 'Score', icon: assets.arrow},
 
   ];
 
@@ -127,9 +127,9 @@ const DrawerContent = (
           <Image
             radius={0}
             width={33}
-            height={33}
+            height={'290%'}
             color={colors.text}
-            source={assets.logo}
+            source={require("../../assets/Logo.png")}
             marginRight={sizes.sm}
           />
           <Block>
