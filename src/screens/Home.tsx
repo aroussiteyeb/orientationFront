@@ -4,6 +4,7 @@ import {useData, useTheme, useTranslation} from '../hooks/';
 import {Block, Button, Image, Input, Product, Text} from '../components/';
 import { ListItem } from 'react-native-elements';
 
+
 const Home = () => {
   const {t} = useTranslation();
   const [tab, setTab] = useState<number>(0);
@@ -34,7 +35,8 @@ var data=""
     try {
    
 
-      const response = await fetch('http://192.168.10.86:5000/etablisement/etablisementGetAll').then((response)=>response.json()
+
+      const response = await fetch('http://192.168.10.146:5000/etablisement/etablisementGetAll').then((response)=>response.json()
       ) //   <------ this line 
       
       .then(async (response)=>{
@@ -86,8 +88,8 @@ var data=""
   }
 
 
-  useEffect(() => {
 
+  useEffect(() => {
     handleetablisement();
   
   },[]);

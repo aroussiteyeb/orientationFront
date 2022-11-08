@@ -45,9 +45,13 @@ const Score = () => {
   }
   const handleScore = async () => {
     try {
-      console.log("jj",data)
+      //console.log("jj",data)
+      const ress =  Object.entries(inputs).map( (data, index) => ({matieres:data[0], note:data[1] ,mg:"15",coif:formCoiff[index]}) );
+    data.section=quantity
+  data.data=ress
 
-      let res = await fetch('http://192.168.10.86:5000/CalculeScore/Score', {
+
+      let res = await fetch('http://192.168.10.146:5000/CalculeScore/Score', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -69,6 +73,9 @@ const Score = () => {
      setScore(score)
          
      
+      }).then(()=>{
+        setshow(true)
+
       });; 
       
      
@@ -78,21 +85,14 @@ const Score = () => {
     }
 
 
-    const res =  Object.entries(inputs).map( (data, index) => ({matieres:data[0], note:data[1] ,mg:"15",coif:formCoiff[index]}) );
-    data.section=quantity
-  data.data=res
+    
 
-    console.log("json",data)
-     setshow(true)
+    //console.log("json",data)
     // navigation.navigate('Filter')
  
    }
    
   const handlenavigate = () => {
-   
-    
-   
-
   
    setshow(false)
    navigation.navigate('Filter',{Score})
@@ -112,7 +112,8 @@ const Score = () => {
   const handleSection = async () => {
 
     try {
-      const response = await fetch('http://192.168.10.86:5000/section/sectionGetAll');
+
+      const response = await fetch('http://192.168.10.146:5000/section/sectionGetAll');
       const data =[]
       const json = await response.json();
       json.forEach(element  => {
@@ -135,7 +136,8 @@ const Score = () => {
     const data=[]
     const dataCoiff=[]
       try {
-        let res = await fetch('http://192.168.10.86:5000/section/sectionGetByName', {
+
+        let res = await fetch('http://192.168.10.146:5000/section/sectionGetByName', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',

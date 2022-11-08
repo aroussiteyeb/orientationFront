@@ -20,6 +20,7 @@ import {useTheme} from '../hooks/';
 import {useScreenOptions, useTranslation} from '../hooks';
 import {useHeaderHeight} from '@react-navigation/stack';
 import {Block, Button, Input, Image, Switch, Modal, Text} from '../components/';
+import Storage from '@react-native-async-storage/async-storage';
 
 export default function ChatScreen({ navigation, route }) {
   const [input, setInput] = useState("");
@@ -137,15 +138,29 @@ export default function ChatScreen({ navigation, route }) {
       ),
     });
   }, [assets.header, navigation, sizes.width, headerHeight]);
-  const sendMessage = () => {
+  const getUserAvatar = async () => {
+    // get Data from Storage
+    try {
+      const data = await Storage.getItem('avatar');
+      if (data !== null) {
+        console.log('test',data);
+        return data;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const sendMessage = async () => {
     Keyboard.dismiss();
-
+    const avatar = await Storage.getItem('avatar');
+    const email = await Storage.getItem('email');
+    const result = email.split('@')[0];
     db.collection("chats").doc(route.params.id).collection("messages").add({
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       message: input,
-      displayName: auth.currentUser.displayName,
+      displayName:result,
       email: auth.currentUser.email,
-      photoURL: auth.currentUser.photoURL,
+      photoURL: avatar,
     });
     setInput("");
   };

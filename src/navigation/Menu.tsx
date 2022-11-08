@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Alert, Animated, Linking, StyleSheet} from 'react-native';
 import { auth } from "../../firebase";
-import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
+import Storage from '@react-native-async-storage/async-storage';
 
 import {
   useIsDrawerOpen,
@@ -75,12 +75,14 @@ const DrawerContent = (
   const labelColor = colors.text;
 
   const handleNavigation = useCallback(
-    (to) => {
+    async (to) => {
       if(to == 'Chats')
       {
-        
+        const email = await Storage.getItem('email');
+        const password = await Storage.getItem('password');
+
           auth
-            .signInWithEmailAndPassword('aroussi@gmail.com', 'azerty')
+            .signInWithEmailAndPassword(email, password)
             .catch((error) => alert(error));
         
       }

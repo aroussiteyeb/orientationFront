@@ -55,6 +55,7 @@ export default () => {
         component={Profile}
         options={{headerShown: false}}
       />
+      
      <Stack.Screen
         name="Filter"
         component={Filter}
