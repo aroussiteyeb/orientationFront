@@ -1508,6 +1508,7 @@
   "resolved" "https://registry.npmjs.org/@faker-js/faker/-/faker-7.6.0.tgz"
   "version" "7.6.0"
 
+
 "@firebase/analytics-compat@0.1.17":
   "integrity" "sha512-36ByEDsH6/3YNuD6yig30s2A/+E1pt333r8SJirUE8+aHYl/DGX0PXplKvJWDGamYYjMwet3Kt4XRrB1NY8mLg=="
   "resolved" "https://registry.npmjs.org/@firebase/analytics-compat/-/analytics-compat-0.1.17.tgz"
@@ -6236,10 +6237,7 @@
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
 
-"fsevents@^2.1.2", "fsevents@^2.3.2", "fsevents@~2.3.2":
-  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
-  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
-  "version" "2.3.2"
+
 
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="

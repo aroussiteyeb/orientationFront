@@ -242,6 +242,7 @@ export interface ThemeIcons {
   train: ImageSourcePropType;
   users: ImageSourcePropType;
   warning: ImageSourcePropType;
+  calculator:ImageSourcePropType;
 }
 
 export interface ThemeAssets {

@@ -101,6 +101,20 @@ const Register = () => {
 
         }).catch(error => console.log(error));
 
+
+      axios.post(`http://192.168.10.86:5000/users/signup`, data)
+      .then(res => {
+        console.log("hh",res.data)
+      if (res.data.error==true){
+        showToastWithGravityAndOffset(res.data.message)
+      }else{(res.data.success==true)
+        showToastWithGravityAndOffset(res.data.message)
+        navigation.navigate('Pro')}
+
+      
+      }).catch(error=>console.log(error));
+      
+
       console.log('handleSignUp', registration);
     }
   }, [isValid, registration]);

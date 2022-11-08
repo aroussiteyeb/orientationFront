@@ -439,20 +439,20 @@ const Etablissement = (
                       <Carousel
                         loop
                         width={width}
-                        height={width / 2}
+                        height={width / 2.5}
                         autoPlay={true}
                         data={[...new Array(etablissment.galorie.length).keys()]}
                         scrollAnimationDuration={1000}
                         //onSnapToItem={(index) => console.log('current index:', index)}
                         renderItem={({ index }) => (
                           //console.log(etablissment.galorie[0].path),
-                          <View>
+                          <View style={{paddingRight:'5%'}}>
 
                             <Image
                               resizeMode="cover"
                               source={{ uri: etablissment.galorie[index].path }}
 
-                              style={{ width: '90%', height: '100%' }}
+                              style={{ width: '85%', height: '100%' }}
                             />
                           </View>
                         )}

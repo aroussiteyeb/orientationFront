@@ -71,7 +71,7 @@ const Login = () => {
         "password":registration.password  
     }
     
-   /*    axios.post(`http://192.168.40.2:5000/users/login`, data)
+      axios.post(`http://192.168.10.86:5000/users/login`, data)
       .then(res => {
         console.log("hh",res.data)
       if (res.data.error==true){
@@ -81,10 +81,11 @@ const Login = () => {
         navigation.navigate('Home')}
 
       
-      }).catch(error=>console.log('test',error)); */
+      }).catch(error=>console.log('test',error));
 
       
       try {
+
         let res = await fetch('http:/192.168.10.146:5000/users/login', {
           method: 'POST',
           headers: {

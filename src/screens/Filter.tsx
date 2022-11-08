@@ -7,6 +7,8 @@ import { Block, Button, Input, Text, Switch, Image, Modal } from '../components'
 import * as regex from '../constants/regex';
 import { useNavigation } from '@react-navigation/core';
 import Dialog from "react-native-dialog";
+import { useRoute } from '@react-navigation/native';
+import { useIsFocused } from "@react-navigation/native";
 
 
 interface IFiltrationForm {
@@ -23,6 +25,8 @@ interface IFiltrationFormValidation {
 
 const Filter = () => {
   const data = useData();
+  const isFocused = useIsFocused();
+
   const [selected, setSelected] = useState<ICategory>();
   const [articles, setArticles] = useState<IArticle[]>([]);
   const [categories, setCategories] = useState<ICategory[]>([]);
@@ -39,7 +43,8 @@ const Filter = () => {
   const [modalSimple, setModalSimle] = useState(false);
   const [dialogInput, setDialogInput] = useState('');
   const [dialogSwitch, setDialogSwitch] = useState('');
-
+  const route = useRoute();
+  const [score, setscore] = useState(route.params.Score);
   const [place, setPlace] = useState('Select place');
   const navigation = useNavigation();
   const showToastWithGravityAndOffset = (message :string ) => {
@@ -94,6 +99,7 @@ const Filter = () => {
   const handleNavigateSimple = async () => {
     setModalSimle(false)
     try {
+
       let res = await fetch('http:/192.168.10.146:5000/simpleFiltring/filter', {
         method: 'post',
         headers: {
@@ -130,10 +136,12 @@ const Filter = () => {
 
   // init articles
   useEffect(() => {
+  
+    setscore(route.params.Score)
     setArticles(data?.articles);
     setCategories(CATEGORIES);
     setSelected(data?.categories[0]);
-  }, [data.articles, data.categories]);
+  }, [data.articles, data.categories, isFocused]);
 
   // update articles on category change
   useEffect(() => {
@@ -198,8 +206,8 @@ const Filter = () => {
         paddingHorizontal={sizes.padding}>
 
         <Block>
-
-          <Input placeholder="Score" marginBottom={sizes.sm}
+          <Input placeholder='Score' marginBottom={sizes.sm}
+            defaultValue={String(score)}
             label='Enter your score here'
             success={Boolean(FiltrationForm.score && isValid.score)}
             danger={Boolean(FiltrationForm.score && !isValid.score)}
