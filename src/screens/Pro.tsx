@@ -7,6 +7,8 @@ import { useData, useTheme, useTranslation } from '../hooks/';
 import * as regex from '../constants/regex';
 import { Block, Button, Input, Image, Text, Checkbox } from '../components/';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Storage from '@react-native-async-storage/async-storage';
+import { auth } from "../../firebase";
 
 
 const isAndroid = Platform.OS === 'android';
@@ -83,7 +85,7 @@ const Login = () => {
 
       
       try {
-        let res = await fetch('http:/192.168.1.37:5000/users/login', {
+        let res = await fetch('http:/192.168.10.146:5000/users/login', {
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -101,6 +103,11 @@ const Login = () => {
             showToastWithGravityAndOffset(response.message)
             const jsonValue = JSON.stringify({token: response.accessToken})
             await AsyncStorage.setItem('@storage_Key', jsonValue)
+            console.log(response.avatar)
+            auth.createUserWithEmailAndPassword(registration.email,registration.password)
+            Storage.setItem('avatar',response.avatar);
+            Storage.setItem('email',registration.email);
+            Storage.setItem('password',registration.password);
 
           
 

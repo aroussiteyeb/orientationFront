@@ -7,8 +7,6 @@ import { IArticle, ICategory } from '../constants/types';
 import { Block, Button, Article, Image, Etablissement, Text } from '../components/';
 import { Modalize } from 'react-native-modalize';
 import { useCombinedRefs } from '../util/use-combined-refs';
-import { faker } from '@faker-js/faker';
-import MapVieww from '../components/mapVieww';
 
 const Rsultat = forwardRef((_, ref) => {
   const data = useData();
@@ -26,7 +24,7 @@ const Rsultat = forwardRef((_, ref) => {
   const [itemData, setItemdata] = useState([]);
 
   const onOpen = (etablisementId) => {
-    const data = { etablissment: {}, filieres: {}, parcours: {} };
+    const data = { etablissment: {}, filieres: {}, parcours: {}  };
     //console.log(dataFilter)
     dataFilter.forEach(element => {
       element.etablissment.forEach(result => {
@@ -94,8 +92,41 @@ const Rsultat = forwardRef((_, ref) => {
   const handleProducts = useCallback(
 
     (tab: number) => {
-      console.log(etabli)
+      if(tab === 1)
+      {let etablissement = []
+        dataFilter.forEach(element => {
 
+          element.etablissment.forEach(result => {
+            element.fileires.forEach(filiere => {
+              //console.log(filiere[0].namefiliere)
+              result.nameFiliere = filiere[0].namefiliere;
+              etablissement.push(result)
+    
+            });
+    
+          });
+          setEtablissements(etablissement.sort((a,b)=> Number(a.rating) > Number(b.rating) ? -1 : 1))
+        });
+        //const data = etabli.sort((a, b) => Number(a.rating) > Number(b.rating) ? 1 : -1);
+        console.log(dataFilter)
+        //setEtablissements(data)
+      }else{
+        let etablissement = []
+        dataFilter.forEach(element => {
+
+          element.etablissment.forEach(result => {
+            element.fileires.forEach(filiere => {
+              //console.log(filiere[0].namefiliere)
+              result.nameFiliere = filiere[0].namefiliere;
+              etablissement.push(result)
+    
+            });
+    
+          });
+          setEtablissements(etablissement)
+        });
+      }
+ 
       setTab(tab);
       setProducts(tab === 0 ? following : trending);
     },
@@ -123,9 +154,7 @@ const Rsultat = forwardRef((_, ref) => {
   return (
 
     <Block>
-
       <>
-
 
         <Modalize ref={combinedRef} HeaderComponent={renderHeader} withHandle={false}>
           {renderContent()}

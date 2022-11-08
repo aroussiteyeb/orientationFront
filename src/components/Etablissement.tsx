@@ -13,12 +13,12 @@ import {
 import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 
 import { useNavigation } from '@react-navigation/core';
-import { Block, Button, Input, Image, Switch, Modal, Text, MapVieww } from '../components/';
+import { Block, Button, Input, Image, Switch, Modal, Text } from '../components/';
 import { useTheme } from '../hooks/';
 import Carousel from 'react-native-reanimated-carousel';
+import getDirections from 'react-native-google-maps-directions'
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+
 //import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import tw from "tailwind-react-native-classnames";
 import { BoltLightText, BoltSemiBoldText } from "../components/CustomText";
@@ -36,6 +36,7 @@ const IMAGE_WIDTH = 290;
 
 const Etablissement = (
   {
+    position,
     etablissment,
     filieres,
     parcours,
@@ -66,7 +67,7 @@ const Etablissement = (
   ).current;
 
   useEffect(() => {
-    console.log(parcours)
+
     if (toggleBar) {
       Animated.timing(searchBarAnim, {
         toValue: 0,
@@ -85,14 +86,38 @@ const Etablissement = (
     }
   }, [toggleBar]);
 
-  const mapView = () => {
-    console.log('map')
-   
+  const handleGetDirections = () => {
+    const pos = etablissment.position.split(',')
+    //alert(pos)
+    const data = {
+       source: {
+        latitude:36.898283814839026, 
+        longitude: 10.190044284656771
+      },
+      destination: {
+        latitude:  Number(pos[0]),
+        longitude:Number(pos[1])
+      },
+      params: [
+        {
+          key: "travelmode",
+          value: "driving"        // may be "walking", "bicycling" or "transit" as well
+        },
+        {
+          key: "dir_action",
+          value: "navigate"       // this instantly initializes navigation using the given travel mode
+        }
+      ],
+      
+    }
 
+    getDirections(data)
   }
   // render card for Popular
   return (
+    
     <View style={tw`flex relative bg-white`}>
+
       <Animated.View
         style={tw.style(
           "bg-white w-full absolute flex items-center px-5 shadow-lg",
@@ -104,6 +129,7 @@ const Etablissement = (
            } */
         )}
       >
+        
         <View
           style={tw.style(
             "flex flex-col w-full justify-between h-full pt-5",
@@ -142,7 +168,8 @@ const Etablissement = (
                 }
               )}
             >
-              {etablissment.nameEtablisement}
+              {etablissment.nameEtablisement}      
+
             </BoltSemiBoldText>
 
             <Ionicons
@@ -268,7 +295,7 @@ const Etablissement = (
             <View style={tw`w-full mt-5 flex flex-col`}>
 
 
-              <Button flex={1} gradient={gradients.primary} marginBottom={sizes.base} onPress={mapView}>
+              <Button flex={1} gradient={gradients.primary} marginBottom={sizes.base} onPress={handleGetDirections}>
                 <Text white bold transform="uppercase">
                   View in map
                 </Text>

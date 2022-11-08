@@ -49,7 +49,7 @@ export interface IEtablissment {
   etablissment?: any;
   filieres?: any;
   parcours?: any;
-  
+  position:any;
   //user?: IUser;
   //offers?: IProduct[];
   //options?: IArticleOptions[];
