@@ -9,6 +9,7 @@ import Image from './Image';
 import Article from './Article';
 import Product from './Product';
 import Etablissement from './Etablissement';
+import GmapsDirections from './gmapsDirections';
 
 export {
   Etablissement,
@@ -22,4 +23,5 @@ export {
   Article,
   Product,
   Modal,
+  GmapsDirections
 };

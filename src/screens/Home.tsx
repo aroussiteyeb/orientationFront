@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import {useData, useTheme, useTranslation} from '../hooks/';
 import {Block, Button, Image, Input, Product, Text} from '../components/';
+import Storage from '@react-native-async-storage/async-storage';
 
 const Home = () => {
   const {t} = useTranslation();
@@ -26,7 +27,7 @@ const Home = () => {
     try {
    
 
-      const response = await fetch('http://192.168.10.181:5000/etablisement/etablisementGetAll').then((response)=>response.json()
+      const response = await fetch('http://192.168.10.146:5000/etablisement/etablisementGetAll').then((response)=>response.json()
       ) //   <------ this line 
       
       .then(async (response)=>{
@@ -46,8 +47,8 @@ const Home = () => {
 
 
   }
+  
   useEffect(() => {
-
     handleetablisement();
   
   },[]);
