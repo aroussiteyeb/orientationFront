@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Compile the source code' 
                 // Install dependencies
-                sh 'npm install'
+                sh 'npm install --force'
             }
         }
         stage('Security Check') {
