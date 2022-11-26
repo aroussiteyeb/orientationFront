@@ -31,6 +31,8 @@ pipeline {
         stage('PACKAGE & DEPLOY') {
             steps {
                 echo 'PACKAGING and DEPLOYMENT IN PROGRESS'
+                                //sh 'expo webhoks'
+
                 
             }
         }
