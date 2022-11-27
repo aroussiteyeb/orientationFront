@@ -162,7 +162,7 @@ const Login = () => {
             </Button> */}
 
             <Text h4 center white marginBottom={sizes.md}>
-              {/*   {t('register.title')} */} Login
+              {/*   {t('register.title')} */} CI CD updated
             </Text>
           </Image>
         </Block>
