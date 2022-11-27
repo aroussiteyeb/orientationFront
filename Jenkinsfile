@@ -24,28 +24,20 @@ pipeline {
         stage('UNIT TEST') {
             steps {
                 echo 'TEST PHASE IN PROGRESS'
-               /* sh 'npm install --save-dev mocha'
-                sh 'rm -rf mochaReport.xml'
-                sh 'npm test > mochaReport.xml'*/
+                sh 'npm test'
                 
             }
         }
         stage('PACKAGE & DEPLOY') {
             steps {
                 echo 'PACKAGING and DEPLOYMENT IN PROGRESS'
-                                //sh 'expo webhoks'
+                          sh 'expo publish'
 
                 
             }
         }
-        stage('UI TEST') {
-            steps {
-                echo 'POST DEPLOYMENT TEST PHASE IN PROGRESS'
-                
-            }
-        }
+      
      
-       
          stage('ARCHIVE') {
             steps {
                 echo 'ARCHIVING PHASE IN PROGRESS'
