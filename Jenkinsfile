@@ -15,6 +15,7 @@ pipeline {
                 echo 'BUILD OF Project IN PROGRESS'
                 sh 'npm install --global expo-cli --force'
                 sh 'npm isntall --force'
+                sh'expo login -u jenkinsorientation -p Aroussi123*'
                 sh 'expo build:android --type apk   --non-interactive'
                 
             }
