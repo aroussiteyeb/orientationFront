@@ -16,6 +16,7 @@ pipeline {
                 sh 'npm install --global expo-cli --force'
                 sh 'npm isntall --force'
                 sh'expo login -u jenkinsorientation -p Aroussi123*'
+                sh 'npm install expo-updates --force'
                 sh 'expo build:android --type apk   --non-interactive'
                 
             }
