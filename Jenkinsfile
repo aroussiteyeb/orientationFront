@@ -7,8 +7,19 @@ pipeline {
             steps {
                 echo 'Getting PROJECT FROM SCM'
                 git branch: 'main', credentialsId: '4883425d-9cb5-479a-a84e-8d800e3f77af', url: 'https://github.com/aroussiteyeb/orientationFront.git'
+                 mail to: "aroussi1996@gmail.com",
+                 subject: "Success",
+                 body: " Git SCM PROJECT DONE"
                 
             }
+            post { 
+                    failure { 
+                  mail to: "aroussi1996@gmail.com",
+                  subject: "failure",
+                  body: " Git SCM PROJECT failure"        
+                    }        
+            } 
+
         }
         stage('BUILD') {
             steps {
@@ -19,22 +30,53 @@ pipeline {
                 sh 'npm install expo-updates --force'
                 sh 'expo build:android --type apk   --non-interactive'
                 
+                 mail to: "aroussi1996@gmail.com",
+                 subject: "Success",
+                 body: " BUILD DONE"
+                
             }
+               post { 
+                    failure { 
+                  mail to: "aroussi1996@gmail.com",
+                  subject: "failure",
+                  body: " Build failure"        
+                    }        
+            } 
         }
         stage('UNIT TEST') {
             steps {
                 echo 'TEST PHASE IN PROGRESS'
                 sh 'npm test'
+                mail to: "aroussi1996@gmail.com",
+                 subject: "Success",
+                 body: " TEST DONE"
                 
             }
+             post { 
+                    failure { 
+                  mail to: "aroussi1996@gmail.com",
+                  subject: "failure",
+                  body: " Test failure"        
+                    }        
+            } 
         }
         stage('PACKAGE & DEPLOY') {
             steps {
                 echo 'PACKAGING and DEPLOYMENT IN PROGRESS'
                           sh 'expo publish'
+                    mail to: "aroussi1996@gmail.com",
+                 subject: "Success",
+                 body: " DEPLOY DONE"
 
                 
             }
+            post { 
+                    failure { 
+                  mail to: "aroussi1996@gmail.com",
+                  subject: "failure",
+                  body: " Deploy failure"        
+                    }        
+            } 
         }
       
      
@@ -44,8 +86,18 @@ pipeline {
                  sh 'rm -rf *.tar.gz'
                  sh 'tar czf Archive_$BUILD_NUMBER.tar.gz **/*.*'
                 //junit '**/mochaReport.xml'
+                mail to: "aroussi1996@gmail.com",
+                 subject: "Success",
+                 body: " ARCHIVE DONE"
                 
             }
+             post { 
+                    failure { 
+                  mail to: "aroussi1996@gmail.com",
+                  subject: "failure",
+                  body: " Archive failure"        
+                    }        
+            } 
         }
     }
     post {  
@@ -60,7 +112,7 @@ pipeline {
              echo 'This will run only if successful' 
            
                mail to: "aroussi1996@gmail.com",
-               subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+               subject: "All stage are succefuly done : jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}"
               /*mail to: "aroussi1996@gmail.com",
               subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
