@@ -13,7 +13,7 @@ pipeline {
         stage('BUILD') {
             steps {
                 echo 'BUILD OF Project IN PROGRESS'
-                //sh 'npm i expo-cli --force'
+                sh 'npm i expo-cli --force'
                 sh 'npm isntall --force'
                 sh 'expo build:android'
                 
