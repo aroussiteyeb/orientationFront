@@ -25,7 +25,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#CB0C9F"
-      }
+      },
     "package": "com.jenkinsorientation.rnsoftuikitfree"
 
     },
