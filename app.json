@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "rn-soft-ui-kit-free",
-    "slug": "rn-soft-ui-kit-free",
-    "description": "React Native - Soft UI Kit - Free",
+    "name": "Orientini",
+    "slug": "Orientini",
+    "description": "orientation-tn",
     "primaryColor": "#CB0C9F",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -26,7 +26,9 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#CB0C9F"
       },
+
       "package": "com.jenkinsorientation.rnsoftuikitfree"
+
     },
     "web": {
       "favicon": "./assets/favicon.png"
