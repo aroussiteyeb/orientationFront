@@ -87,7 +87,7 @@ const Register = () => {
       }
 
 
-      axios.post(`http://192.168.10.146:5000/users/signup`, data)
+      axios.post(`http://192.168.43.28:5000/users/signup`, data)
         .then(res => {
           console.log("hh", res.data)
           if (res.data.error == true) {
@@ -102,7 +102,7 @@ const Register = () => {
         }).catch(error => console.log(error));
 
 
-      axios.post(`http://192.168.10.86:5000/users/signup`, data)
+      axios.post(`http://192.168.43.28:5000/users/signup`, data)
       .then(res => {
         console.log("hh",res.data)
       if (res.data.error==true){
@@ -182,7 +182,6 @@ const Register = () => {
 
     blob.close();
 
-
   }
   return (
     <Block safe marginTop={sizes.md}>
@@ -217,10 +216,11 @@ const Register = () => {
             </Button> */}
 
 
-            <Block flex={0} align="center" marginTop={40}>
+            <Block flex={0} align="center" marginTop={20}>
               <Icon name="edit" type="antdesign" size={24} style={{ marginLeft: 100 }} color="#fff" onPress={() => pickImage()} />
               {image!== null? <Avatar.Image size={130} source={{ uri: image }} />
-                : <Avatar.Image size={130} source={require('../assets/images/defaultAvatar.jpeg')} />}
+              
+                   : <Avatar.Image size={100} source={require('../assets/images/defaultAvatar.jpeg')} />}
 
 
 

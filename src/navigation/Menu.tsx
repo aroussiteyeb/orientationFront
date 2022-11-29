@@ -131,7 +131,7 @@ const DrawerContent = (
             width={33}
             height={'290%'}
             color={colors.text}
-            source={require("../../assets/Logo.png")}
+            source={require("../../assets/logo.png")}
             marginRight={sizes.sm}
           />
           <Block>
