@@ -166,7 +166,7 @@ export default function ChatScreen({ navigation, route }) {
   const sendMessage = async () => {
   
 let data = {"message":"free"}
-    let res = await fetch('http://192.168.10.242:5000/spam/predict', {
+    let res = await fetch('http://192.168.43.52:5000/spam/predict', {
       method: 'post',
       headers: {
         Accept: 'application/json',

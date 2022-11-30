@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Alert, Animated, Linking, StyleSheet} from 'react-native';
 import { auth } from "../../firebase";
 import Storage from '@react-native-async-storage/async-storage';
+import * as OpenAnything from 'react-native-openanything';
 
 import {
   useIsDrawerOpen,
@@ -86,6 +87,7 @@ const DrawerContent = (
             .catch((error) => alert(error));
         
       }
+     
       setActive(to);
       navigation.navigate(to);
     },
@@ -99,6 +101,11 @@ const DrawerContent = (
     },
     [navigation, setActive],
   );
+
+  const openPDF = () =>{
+    OpenAnything.Pdf('https://www.orientation.tn/orient/pdf/guide_2022.pdf')
+
+  }
 
   const handleWebLink = useCallback((url) => Linking.openURL(url), []);
 
@@ -114,6 +121,7 @@ const DrawerContent = (
     //{name: t('screens.register'), to: 'Register', icon: assets.register},
    // {name: t('screens.extra'), to: 'Pro', icon: assets.extras},
    {name:'Score', to: 'Score', icon: assets.arrow},
+
 
   ];
 
@@ -176,7 +184,34 @@ const DrawerContent = (
             </Button>
           );
         })}
-
+<Button
+          row
+          justify="flex-start"
+          marginTop={sizes.sm}
+          marginBottom={sizes.s}
+          onPress={ openPDF }>
+          <Block
+            flex={0}
+            radius={6}
+            align="center"
+            justify="center"
+            width={sizes.md}
+            height={sizes.md}
+            marginRight={sizes.s}
+            gradient={gradients.white}>
+            <Image
+              radius={0}
+              width={14}
+              height={14}
+              color={colors.black}
+              source={assets.document}
+            />
+          </Block>
+          <Text p color={labelColor}>
+            {/* {t('menu.started')} */}
+            PDF
+          </Text>
+        </Button>
         <Block
           flex={0}
           height={1}
