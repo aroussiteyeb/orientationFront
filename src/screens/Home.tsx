@@ -37,7 +37,9 @@ var data=""
    
 
 
+
       const response = await fetch('http://192.168.1.2:5000/etablisement/etablisementGetAll').then((response)=>response.json()
+
       ) //   <------ this line 
       
       .then(async (response)=>{

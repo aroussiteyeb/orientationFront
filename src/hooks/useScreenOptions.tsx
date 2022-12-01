@@ -78,7 +78,7 @@ export default () => {
             radius={sizes.sm / 2}
             gradient={gradients?.primary}>
             <Text white center bold size={10} lineHeight={10} paddingTop={3}>
-              3
+              4
             </Text>
           </Block>
         </TouchableOpacity>

@@ -87,7 +87,9 @@ const Register = () => {
       }
 
 
+
       axios.post(`http://192.168.1.2:5000/users/signup`, data)
+
         .then(res => {
           console.log("hh", res.data)
           if (res.data.error == true) {
@@ -102,7 +104,9 @@ const Register = () => {
         }).catch(error => console.log(error));
 
 
+
       axios.post(`http://192.168.1.2:5000/users/signup`, data)
+
       .then(res => {
         console.log("hh",res.data)
       if (res.data.error==true){

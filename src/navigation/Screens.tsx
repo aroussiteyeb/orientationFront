@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import {Articles, Components, Home, Profile, Register, Panier,Pro, Filter,Resultat,ChatScreen,Chats,AddChatScreen,Score} from '../screens';
 import {useScreenOptions, useTranslation} from '../hooks';
+import PDFview from '../screens/PDFview';
 
 const Stack = createStackNavigator();
 
@@ -59,6 +60,8 @@ export default () => {
         component={Profile}
         options={{headerShown: false}}
       />
+
+
       
      <Stack.Screen
         name="Filter"

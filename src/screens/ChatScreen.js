@@ -10,6 +10,7 @@ import {
   ScrollView,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  ToastAndroid
 } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { Avatar } from "react-native-elements";
@@ -27,6 +28,18 @@ export default function ChatScreen({ navigation, route }) {
   const [messages, setMessages] = useState([]);
   const {assets, sizes,icons, colors, gradients} = useTheme();
   const headerHeight = useHeaderHeight();
+  const isAndroid = Platform.OS === 'android';
+
+  const showToastWithGravityAndOffset = (message :string ) => {
+    ToastAndroid.showWithGravityAndOffset(
+     message,
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+    
+      25,
+      50
+    );
+  };
 
  /*  useLayoutEffect(() => {
     navigation.setOptions({
@@ -151,18 +164,40 @@ export default function ChatScreen({ navigation, route }) {
     }
   };
   const sendMessage = async () => {
-    Keyboard.dismiss();
-    const avatar = await Storage.getItem('avatar');
-    const email = await Storage.getItem('email');
-    const result = email.split('@')[0];
-    db.collection("chats").doc(route.params.id).collection("messages").add({
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      message: input,
-      displayName:result,
-      email: auth.currentUser.email,
-      photoURL: avatar,
+  
+let data = {"message":"free"}
+    let res = await fetch('http://192.168.43.52:5000/spam/predict', {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        {"message":input}
+       ),
+      
+    }).then((response)=>response.json()) //   <------ this line 
+    .then(async (response)=>{
+      console.log(response)
+      if (response.success==1){
+        showToastWithGravityAndOffset(response.message)
+      }else{(response.success==0)
+        Keyboard.dismiss();
+        const avatar = await Storage.getItem('avatar');
+        const email = await Storage.getItem('email');
+        const result = email.split('@')[0];
+        db.collection("chats").doc(route.params.id).collection("messages").add({
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          message: input,
+          displayName:result,
+          email: auth.currentUser.email,
+          photoURL: avatar,
+        });
+        setInput("");
+      }
+      //return response ;
     });
-    setInput("");
+   
   };
 
   useLayoutEffect(() => {
