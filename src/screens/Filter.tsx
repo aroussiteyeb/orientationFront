@@ -100,7 +100,9 @@ const Filter = () => {
     setModalSimle(false)
     try {
 
-      let res = await fetch('http:/192.168.43.52:5000/simpleFiltring/filter', {
+
+      let res = await fetch('http:/192.168.1.2:5000/simpleFiltring/filter', {
+
         method: 'post',
         headers: {
           Accept: 'application/json',

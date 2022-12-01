@@ -23,6 +23,8 @@ export {default as Chats} from './Chats';
 export {default as AddChatScreen} from './AddChatScreen';
 export {default as ChatScreen} from './ChatScreen';
 
+export {default as Panier} from './Panier';
+
 
 
 

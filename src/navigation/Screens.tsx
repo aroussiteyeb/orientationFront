@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 
-import {Articles, Components, Home, Profile, Register, Pro, Filter,Resultat,ChatScreen,Chats,AddChatScreen,Score} from '../screens';
+import {Articles, Components, Home, Profile, Register, Panier,Pro, Filter,Resultat,ChatScreen,Chats,AddChatScreen,Score} from '../screens';
 import {useScreenOptions, useTranslation} from '../hooks';
 import PDFview from '../screens/PDFview';
 
@@ -14,7 +14,11 @@ export default () => {
 
   return (
     <Stack.Navigator screenOptions={screenOptions.stack}>
-      <Stack.Screen name="Pro" component={Pro}         options={{headerShown: false}}
+
+
+
+      <Stack.Screen name="Pro" component={Pro}       
+        options={{headerShown: false}}
  />
 
          <Stack.Screen
@@ -64,6 +68,11 @@ export default () => {
         component={Filter}
       initialParams={{Score :""}}
         options={{title: 'Filter'}}
+      />
+   <Stack.Screen
+        name="Panier"
+        component={Panier}
+        options={screenOptions.back}
       />
         <Stack.Screen name="Chats" component={Chats}   options={screenOptions.chats}  />
         <Stack.Screen name="AddChat" component={AddChatScreen}  options={screenOptions.back} />

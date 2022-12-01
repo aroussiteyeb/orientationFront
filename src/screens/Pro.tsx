@@ -71,7 +71,9 @@ const Login = () => {
         "password":registration.password  
     }
     
-      axios.post(`http://192.168.43.52:5000/users/login`, data)
+
+      axios.post(`http://192.168.1.2:5000/users/login`, data)
+
       .then(res => {
         console.log("hh",res.data)
       if (res.data.error==true){
@@ -86,7 +88,9 @@ const Login = () => {
       
       try {
 
-        let res = await fetch('http:/192.168.43.52:5000/users/login', {
+
+        let res = await fetch('http:/192.168.1.2:5000/users/login', {
+
           method: 'POST',
           headers: {
             Accept: 'application/json',
@@ -109,7 +113,8 @@ const Login = () => {
             Storage.setItem('avatar',response.avatar);
             Storage.setItem('email',registration.email);
             Storage.setItem('password',registration.password);
-
+            Storage.setItem('userId',response.userId);
+console.log("id",response)
           
 
             navigation.navigate('Home')}
