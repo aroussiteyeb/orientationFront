@@ -62,7 +62,7 @@ export default () => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('Screens', {
-              screen: 'Pro',
+              screen: 'Panier',
             })
           }>
           <Image source={icons.basket} radius={0} color={colors.icon} />

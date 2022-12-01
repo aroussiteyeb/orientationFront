@@ -1,11 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
-
+import {TouchableOpacity,TouchableWithoutFeedback} from 'react-native';
 import {useData, useTheme, useTranslation} from '../hooks/';
 import {Block, Button, Image, Input, Product, Text} from '../components/';
 import { ListItem } from 'react-native-elements';
-
+import { useNavigation } from '@react-navigation/core';
 
 const Home = () => {
+  const navigation = useNavigation();
   const {t} = useTranslation();
   const [tab, setTab] = useState<number>(0);
   const {following, trending} = useData();
@@ -19,7 +20,7 @@ const Home = () => {
   const [products, setProducts] = useState();
   const [productsCopie, setProductsCopie] = useState();
 
-  const {assets, colors, fonts, gradients, sizes} = useTheme();
+  const {assets, colors, fonts, gradients, sizes,icons} = useTheme();
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const handleProducts = useCallback(
     (tab: number) => {
@@ -36,7 +37,7 @@ var data=""
    
 
 
-      const response = await fetch('http://192.168.43.28:5000/etablisement/etablisementGetAll').then((response)=>response.json()
+      const response = await fetch('http://192.168.1.2:5000/etablisement/etablisementGetAll').then((response)=>response.json()
       ) //   <------ this line 
       
       .then(async (response)=>{
@@ -86,8 +87,11 @@ var data=""
  }
 
   }
-
-
+  const  handlePr = async (item) => {
+    navigation.navigate('Profile',{item})
+    console.log(item)
+  }
+ 
 
   useEffect(() => {
     handleetablisement();
@@ -167,7 +171,58 @@ var data=""
         >
         <Block   marginTop={sizes.sm}>
           {products?.map((item) => (
-            <Product {...item} key={`card-${item?.etablisementId}`} />
+            // <Product {...item} key={`card-${item?.etablisementId}`} />
+            <TouchableWithoutFeedback  onPress={()=> {
+              handlePr(item);
+              } }>
+            <Block card padding={sizes.sm} marginTop={sizes.sm} >
+            <Image height={170} resizeMode="cover" source={{uri: item.galorie[0].path}} />
+            {/* article category */}
+           
+              <Text
+                h5
+                bold
+                size={13}
+                marginTop={sizes.s}
+                transform="uppercase"
+                marginLeft={sizes.xs}
+                gradient={gradients.primary}>
+                {item.nameEtablisement}
+              </Text>
+  
+  
+            {/* article description */}
+            
+              <Text
+                p
+                marginTop={sizes.s}
+                marginLeft={sizes.xs}
+                marginBottom={sizes.sm}>
+                {item.description}
+              </Text>
+            
+  
+            
+  
+            {/* location & rating */}
+            
+            
+              <Block row align="center">
+                <Image source={icons.location} marginRight={sizes.s} />
+                <Text p size={12} semibold>
+                  {item.ville}, {item.region}
+                </Text>
+                <Text p bold marginHorizontal={sizes.s}>
+                  •
+                </Text>
+                <Image source={icons.star} marginRight={sizes.s} />
+                <Text p size={12} semibold>
+                  {item.rating}/5
+                </Text>
+              </Block>
+            
+          </Block>
+          </TouchableWithoutFeedback>
           ))}
         </Block>
       </Block>

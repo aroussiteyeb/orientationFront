@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useCallback,useState, useRef, useEffect } from "react";
 import {
   View,
   ScrollView,
@@ -9,9 +9,10 @@ import {
   Platform,
   Dimensions,
   SafeAreaView,
+  ToastAndroid,
 } from "react-native";
 import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
-
+import Storage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/core';
 import { Block, Button, Input, Image, Switch, Modal, Text } from '../components/';
 import { useTheme } from '../hooks/';
@@ -65,6 +66,61 @@ const Etablissement = (
         : 0 - Constants.statusBarHeight * 3
     )
   ).current;
+  const showToastWithGravityAndOffset = (message :string ) => {
+    ToastAndroid.showWithGravityAndOffset(
+     message,
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+    
+      25,
+      50
+    );
+  };
+
+  const getMatiere= useCallback(async () => {  
+    const IdUser = await Storage.getItem('userId');
+    const data={
+      UserId:IdUser,
+      Filiers:
+        
+              {
+              IdFilier:"5",
+              NameFiliers:etablissment.nameFiliere
+          }
+  
+      
+  }
+    const dataCoiff=[]
+      try {
+
+        let res = await fetch('http://192.168.1.2:5000/panier/PanierPost', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+          data
+        
+          }),
+        }).then((response)=>response.json()) //   <------ this line 
+        .then(async (response)=>{
+          console.log("post",response)
+          if (response.error==true){
+            showToastWithGravityAndOffset(response.message)
+          }else{(response.success==true)
+            showToastWithGravityAndOffset(response.message)
+      
+        
+    
+          return response ;
+        }});;      
+      } catch (e) {
+        console.error(e);
+      }
+    
+    },[]); 
+
 
   useEffect(() => {
 
@@ -301,7 +357,7 @@ const Etablissement = (
                 </Text>
               </Button>
               <Button flex={1} gradient={gradients.secondary} marginBottom={sizes.base}>
-                <Text white bold transform="uppercase">
+                <Text white bold transform="uppercase" onPress={() => getMatiere()}>
                   select
                 </Text>
               </Button>
