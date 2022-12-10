@@ -13,6 +13,9 @@ const Product = ({galorie, nameEtablisement, type, description,ville,region,rati
 
   const isHorizontal = type !== 'vertical';
   const CARD_WIDTH = (sizes.width - sizes.padding * 2 - sizes.sm) / 2;
+  const HandelProfile = async () => {
+    console.log(nameEtablisement)
+  }
 
   return (
  /*  <Block
@@ -52,8 +55,8 @@ const Product = ({galorie, nameEtablisement, type, description,ville,region,rati
         </TouchableOpacity>
       </Block>
     </Block> */
-    <TouchableWithoutFeedback >
-    <Block card padding={sizes.sm} marginTop={sizes.sm} >
+    <TouchableWithoutFeedback>
+    <Block card padding={sizes.sm} marginTop={sizes.sm}  >
           <Image height={170} resizeMode="cover" source={{uri: galorie[0].path}} />
           {/* article category */}
          
