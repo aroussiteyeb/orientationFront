@@ -51,8 +51,9 @@ const Score = () => {
   data.data=ress
 
 
+      let res = await fetch('http://192.168.20.68:5000/CalculeScore/Score', {
 
-      let res = await fetch('http://192.168.20.70:5000/CalculeScore/Score', {
+
 
         method: 'POST',
         headers: {
@@ -115,8 +116,8 @@ const Score = () => {
 
     try {
 
+      const response = await fetch('http://192.168.20.68:5000/section/sectionGetAll');
 
-      const response = await fetch('http://192.168.20.70:5000/section/sectionGetAll');
 
       const data =[]
       const json = await response.json();
@@ -141,8 +142,8 @@ const Score = () => {
     const dataCoiff=[]
       try {
 
+        let res = await fetch('http://192.168.20.68:5000/section/sectionGetByName', {
 
-        let res = await fetch('http://192.168.20.70:5000/section/sectionGetByName', {
 
           method: 'POST',
           headers: {

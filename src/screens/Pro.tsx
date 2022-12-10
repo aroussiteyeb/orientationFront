@@ -71,8 +71,7 @@ const Login = () => {
         "password":registration.password  
     }
     
-
-      axios.post(`http://192.168.20.70:5000/users/login`, data)
+      axios.post(`http://192.168.20.68:5000/users/login`, data)
 
       .then(res => {
         console.log("hh",res.data)
@@ -88,8 +87,7 @@ const Login = () => {
       
       try {
 
-
-        let res = await fetch('http:/192.168.20.70:5000/users/login', {
+        let res = await fetch('http:/192.168.20.68:5000/users/login', {
 
           method: 'POST',
           headers: {
