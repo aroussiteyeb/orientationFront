@@ -93,7 +93,7 @@ const Etablissement = (
     const dataCoiff=[]
       try {
 
-        let res = await fetch('http://192.168.1.2:5000/panier/PanierPost', {
+        let res = await fetch('http://192.168.20.70:5000/panier/PanierPost', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',

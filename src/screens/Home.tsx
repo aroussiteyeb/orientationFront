@@ -38,7 +38,7 @@ var data=""
 
 
 
-      const response = await fetch('http://192.168.1.2:5000/etablisement/etablisementGetAll').then((response)=>response.json()
+      const response = await fetch('http://192.168.20.70:5000/etablisement/etablisementGetAll').then((response)=>response.json()
 
       ) //   <------ this line 
       
