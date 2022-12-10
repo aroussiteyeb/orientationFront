@@ -101,7 +101,7 @@ const Filter = () => {
     try {
 
 
-      let res = await fetch('http:/192.168.1.2:5000/simpleFiltring/filter', {
+      let res = await fetch('http:/192.168.20.70:5000/simpleFiltring/filter', {
 
         method: 'post',
         headers: {
